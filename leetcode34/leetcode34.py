@@ -1,12 +1,12 @@
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
-        def findIndex(isFirst):
+        def findBound(isFirst: bool) -> int:
             left, right = 0, len(nums) - 1
-            index = -1
+            bound = -1
             while left <= right:
                 mid = (left + right) // 2
                 if nums[mid] == target:
-                    index = mid
+                    bound = mid
                     if isFirst:
                         right = mid - 1
                     else:
@@ -15,7 +15,7 @@ class Solution:
                     left = mid + 1
                 else:
                     right = mid - 1
-            return index
-        first = findIndex(True)
-        last = findIndex(False)
-        return [first, last]       
+            return bound
+        first = findBound(True)
+        last = findBound(False)
+        return [first, last]
