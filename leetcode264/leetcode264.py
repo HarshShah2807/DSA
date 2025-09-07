@@ -15,3 +15,18 @@ class Solution:
             if next_ugly == next5:
                 i5 += 1
         return ugly[-1]
+
+
+def nthUglyNumber(n: int) -> int:
+    heap = [1]
+    seen = {1}
+
+    for _ in range(n):  
+        ugly = heapq.heappop(heap)
+        for factor in [2, 3, 5]:
+            new_ugly = ugly * factor
+            if new_ugly not in seen:
+                seen.add(new_ugly)
+                heapq.heappush(heap, new_ugly)
+
+    return ugly
