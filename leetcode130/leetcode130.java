@@ -1,23 +1,17 @@
 class Solution {
+    private int rows, cols;
+    
     public void solve(char[][] board) {
         if (board == null || board.length == 0 || board[0].length == 0) return;
-        int rows = board.length;
-        int cols = board[0].length;
-        void dfs(int r, int c) {
-            if (r < 0 || r >= rows || c < 0 || c >= cols || board[r][c] != 'O') return;
-            board[r][c] = 'S';
-            dfs(r + 1, c);
-            dfs(r - 1, c);
-            dfs(r, c + 1);
-            dfs(r, c - 1);
-        }
+        rows = board.length;
+        cols = board[0].length;
         for (int r = 0; r < rows; r++) {
-            if (board[r][0] == 'O') dfs(r, 0);
-            if (board[r][cols - 1] == 'O') dfs(r, cols - 1);
+            if (board[r][0] == 'O') dfs(board, r, 0);
+            if (board[r][cols - 1] == 'O') dfs(board, r, cols - 1);
         }
         for (int c = 0; c < cols; c++) {
-            if (board[0][c] == 'O') dfs(0, c);
-            if (board[rows - 1][c] == 'O') dfs(rows - 1, c);
+            if (board[0][c] == 'O') dfs(board, 0, c);
+            if (board[rows - 1][c] == 'O') dfs(board, rows - 1, c);
         }
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
@@ -25,5 +19,13 @@ class Solution {
                 else if (board[r][c] == 'S') board[r][c] = 'O';
             }
         }
+    }
+    private void dfs(char[][] board, int r, int c) {
+        if (r < 0 || r >= rows || c < 0 || c >= cols || board[r][c] != 'O') return;
+        board[r][c] = 'S';
+        dfs(board, r + 1, c);
+        dfs(board, r - 1, c);
+        dfs(board, r, c + 1);
+        dfs(board, r, c - 1);
     }
 }
